@@ -62,6 +62,7 @@ class User < ActiveRecord::Base
                   :invitation_service,
                   :invitation_identifier,
                   :show_community_spotlight_in_stream
+                  :show_nsfw_posts_in_stream
 
 
   def self.all_sharing_with_person(person)
@@ -501,7 +502,8 @@ class User < ActiveRecord::Base
     end
     [:getting_started,
      :disable_mail,
-     :show_community_spotlight_in_stream].each do |field|
+     :show_community_spotlight_in_stream,
+     :show_nsfw_posts_in_stream].each do |field|
       self[field] = false
     end
     self[:email] = "deletedaccount_#{self[:id]}@example.org"
@@ -518,6 +520,6 @@ class User < ActiveRecord::Base
                             "created_at", "updated_at", "locked_at",
                             "serialized_private_key", "getting_started",
                             "disable_mail", "show_community_spotlight_in_stream",
-                            "email"]
+                            "email","show_nsfw_posts_in_stream"]
   end
 end

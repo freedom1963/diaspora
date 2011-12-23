@@ -959,6 +959,7 @@ en:
       show_community_spotlight: "Show Community Spotlight in Stream?"
       show_getting_started: 'Re-enable Getting Started'
       getting_started: 'New User Prefrences'
+      show_nsfw_posts: "Show NSFW-flagged posts?"
 
       close_account:
         dont_go: "Hey, please don't go!"

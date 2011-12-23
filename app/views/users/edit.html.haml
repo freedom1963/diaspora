@@ -82,6 +82,11 @@
     %p.checkbox_select
       = f.label :show_community_spotlight_in_stream, t('.show_community_spotlight')
       = f.check_box :show_community_spotlight_in_stream
+      
+    %br
+    %p.checkbox_select
+      = f.label :show_nsfw_posts_in_stream, t('.show_nsfw_posts')
+      = f.check_box :show_nsfw_posts_in_stream
 
     %br
     = f.submit t('.change'), :class => 'button'
@@ -121,7 +126,6 @@
         %p.checkbox_select
           = type.label :mentioned, t('.mentioned') 
           = type.check_box :mentioned, {:checked =>  @email_prefs['mentioned']}, false, true
-
 
         %br
         %p.checkbox_select

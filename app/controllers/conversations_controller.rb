@@ -12,7 +12,18 @@ class ConversationsController < ApplicationController
       :page => params[:page], :per_page => 15, :order => 'updated_at DESC')
 
     @unread_counts = {}
-    @visibilities.each { |v| @unread_counts[v.conversation_id] = v.unread }
+    @first_unread_message = Array.new
+    @visibilities.each do |v| 
+      @unread_counts[v.conversation_id] = v.unread
+      @conversation = Conversation.find(v.conversation_id)
+      #puts @conversation.messages.methods
+      @message = @conversation.messages.all.at(@conversation.messages.count - v.unread)
+      #puts @message.id
+      if @message
+        #puts "#{@message.id} #{@message.text}"
+        @first_unread_message << @message.id
+      end
+    end
 
     @authors = {}
     @conversations.each { |c| @authors[c.id] = c.last_author }
@@ -56,13 +67,21 @@ class ConversationsController < ApplicationController
   def show
     if @conversation = Conversation.joins(:conversation_visibilities).where(:id => params[:id],
                                                                             :conversation_visibilities => {:person_id => current_user.person_id}).first
+                           
+                           
+      @first_unread_message = nil                                                 
       if @visibility = ConversationVisibility.where(:conversation_id => params[:id], :person_id => current_user.person.id).first
+        @conversation = Conversation.find(@visibility.conversation_id)
+        @message = @conversation.messages.all.at(@conversation.messages.count - @visibility.unread)
+        if @message
+          @first_unread_message = @message.id
+        end  
         @visibility.unread = 0
         @visibility.save
       end
 
       respond_to do |format|
-        format.html { redirect_to conversations_path(:conversation_id => @conversation.id) }
+        format.html { redirect_to conversations_path(:conversation_id => @conversation.id, :anchor => "scroll_unread") }
         format.js
         format.json { render :json => @conversation, :status => 200 }
       end

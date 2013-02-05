@@ -13,7 +13,7 @@ $(document).ready(function(){
     history.pushState(null, "", this.href);
 
     var conv = $(this).children('.stream_element'),
-        cBadge = $("#message_inbox_badge").children(".badge_count");
+        cBadge = $("#message_inbox_badge.badge_count");
     if(conv.hasClass('unread') ){
       conv.removeClass('unread');
     }

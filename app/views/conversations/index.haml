@@ -22,7 +22,7 @@
   #conversation_inbox
     .stream.conversations
       - if @conversations.count > 0
-        = render :partial => 'conversations/conversation', :collection => @conversations, :locals => {:authors => @authors, :unread_counts => @unread_counts}
+        = render :partial => 'conversations/conversation', :collection => @conversations, :locals => {:authors => @authors, :unread_counts => @unread_counts, :first_unread_message => @first_unread_message}
       - else
         %br
         %br
